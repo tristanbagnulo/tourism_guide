@@ -72,8 +72,8 @@ public class Sight {
             sights.add(new Sight("Sydney Harbour Bridge","Famous building","City of Sydney, NSW",4.7/*,"sydneyharbourbridge"*/));
             sights.add(new Sight("Port Jackson Bay","View","Port Jackson Bay, NSW",4.4/*,"portjacksonbay"*/));
             sights.add(new Sight("Darling Harbour","View","City of Sydney, NSW",4.6/*,"darlingharbour"*/));
-            sights.add(new Sight("Royal Botanic Garden Sydney","Outdoor","City of Sydney, NSW",4.7/*,"royalbotanicgardensydney"*/));
-            sights.add(new Sight("Taronga Zoo Sydney","Attraction","Mosman, NSW",4.5/*,"tarongazoosydney"*/));
+            sights.add(new Sight("Royal Botanic Garden Sydney","Outdoor","City of Sydney, NSW",4.7/*,"royalbotanicgarden"*/));
+            sights.add(new Sight("Taronga Zoo Sydney","Attraction","Mosman, NSW",4.5/*,"tarongazoo"*/));
             sights.add(new Sight("Sydney Tower Eye","Attraction","City of Sydney, NSW",4.3/*,"sydneytowereye"*/));
             sights.add(new Sight("SEA LIFE Sydney Aquarium","Attraction","City of Sydney, NSW",4.3/*,"sealifesydneyaquarium"*/));
             sights.add(new Sight("Manly Beach","Outdoor","Manly, NSW",4.6/*,"manlybeach"*/));
