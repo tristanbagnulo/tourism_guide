@@ -4,24 +4,33 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
 
     //Pass values that are needed for the project
     private ArrayList<Sight> sights;
     Context context;
 
+    //Create a copy of the full data
+    private ArrayList<Sight> sightsFull;
+
     //Constructor - Allows us to Initialises our class in main activity and pass values
     public MyAdapter(Context context, ArrayList<Sight> sights){
         this.context = context;
         this.sights = sights;
+        //Create copy of the full ArrayList
+        sightsFull = new ArrayList<>(sights);
+
     }
 
     @NonNull
@@ -50,7 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         return sights.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, type, location, rating;
         ImageView image;
@@ -66,4 +75,43 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Sight> filteredList = new ArrayList<>();
+
+            //Show everything if there are no filter criteria
+            if (constraint==null||constraint.length()==0){
+                filteredList.addAll(sightsFull);
+            } else {
+                //Prepare the input for filtering by removing cases and extra spaces
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                //Iterate through all items in the list and see whether it fits
+                for (Sight item: sightsFull){
+                    if (item.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            sights.clear();
+            sights.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
