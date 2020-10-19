@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         //Initialise the adapter
-        myAdapter= new MyAdapter(this, Sight.getSights());
+        myAdapter= new MyAdapter(this, Sight.getSights(), this);
 
         //Link Adapter and Recycler View
         mRecyclerView.setAdapter(myAdapter);
@@ -75,4 +75,24 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        switch (id){
+            case R.id.sort_rating:
+                myAdapter.sort(MyAdapter.SORT_METHOD_RATING);
+                return true;
+            case R.id.sort_name:
+                myAdapter.sort(MyAdapter.SORT_METHOD_NAME);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
+
 }

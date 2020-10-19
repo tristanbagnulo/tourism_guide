@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
 
@@ -24,12 +26,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     //Create a copy of the full data
     private ArrayList<Sight> sightsFull;
 
+    //Create variable for sort method
+    public static final int SORT_METHOD_NAME = 1;
+    public static final int SORT_METHOD_RATING = 2;
+
+    //Instantiate onNoteListener
+    private OnNoteListener myOnNoteListener;
+
+
     //Constructor - Allows us to Initialises our class in main activity and pass values
-    public MyAdapter(Context context, ArrayList<Sight> sights){
+    public MyAdapter(Context context, ArrayList<Sight> sights, OnNoteListener onNoteListener){
         this.context = context;
         this.sights = sights;
         //Create copy of the full ArrayList
         sightsFull = new ArrayList<>(sights);
+        this.myOnNoteListener = onNoteListener;
+
 
     }
 
@@ -38,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, myOnNoteListener);
     }
 
     //The onBindViewHolder class sets the text and image of each MyViewHolder object
@@ -59,12 +71,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         return sights.size();
     }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        public static int SORT_METHOD_NAME;
         TextView name, type, location, rating;
         ImageView image;
+        OnNoteListener onNoteListener;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             //Find id using itemView
             name = itemView.findViewById(R.id.tvName);
@@ -72,7 +86,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             location = itemView.findViewById(R.id.tvLocation);
             rating = itemView.findViewById(R.id.tvRating);
             image = itemView.findViewById(R.id.ivImage);
+            itemView.setOnClickListener(this);
 
+            this.onNoteListener = onNoteListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAdapterPosition());
         }
     }
 
@@ -103,7 +124,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             }
             FilterResults results = new FilterResults();
             results.values = filteredList;
-
             return results;
         }
 
@@ -114,4 +134,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             notifyDataSetChanged();
         }
     };
+
+    public void sort(final int sortMethod){
+        //if(sights.size()>0){
+            Collections.sort(sights, new Comparator<Sight>(){
+                @Override
+                public int compare (Sight o1, Sight o2){
+                    if(sortMethod == MyViewHolder.SORT_METHOD_NAME) {
+                        return o1.getName().compareTo(o2.getName());
+                    }else if(sortMethod == SORT_METHOD_RATING){
+                        return Double.compare(o2.getRating(),o1.getRating());
+                    }
+                    return Double.compare(o2.getRating(),o1.getRating());
+                }
+            });
+        //}
+        notifyDataSetChanged();
+    }
+
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
 }
