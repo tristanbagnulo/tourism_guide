@@ -1,7 +1,6 @@
 package au.edu.unsw.infs3634.tourismguide;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,19 +32,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         return new MyViewHolder(view);
     }
 
+    //The onBindViewHolder class sets the text and image of each MyViewHolder object
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Sight sight = sights.get(position);
-
-        //String st = sight.getImageLocation();
-        //Drawable resImg = this.context.getResources().getDrawable(R.drawable.bondibeach);
 
         //Holder is used to find name, type etc...
         holder.name.setText(sight.getName());
         holder.type.setText(sight.getType());
         holder.location.setText(sight.getLocation());
         holder.rating.setText(String.valueOf(sight.getRating()));
-        //holder.image.setImageResource(position);
+        holder.image.setImageResource(sight.getImageLocation());
     }
 
     @Override
@@ -56,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, type, location, rating;
-        //ImageView image;
+        ImageView image;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             type = itemView.findViewById(R.id.tvType);
             location = itemView.findViewById(R.id.tvLocation);
             rating = itemView.findViewById(R.id.tvRating);
-            //image = itemView.findViewById(R.id.ivImage);
+            image = itemView.findViewById(R.id.ivImage);
 
         }
     }

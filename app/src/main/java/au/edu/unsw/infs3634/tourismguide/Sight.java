@@ -9,16 +9,16 @@ public class Sight {
     private String type;
     private String location;
     private double rating;
-    //private String imageLocation;
+    private int imageLocation;
 
 
     //Constructor
-    public Sight(String name, String type, String location, double rating/*, String imageLocation*/){
+    public Sight(String name, String type, String location, double rating, int imageLocation){
         this.name = name;
         this.type = type;
         this.location = location;
         this.rating = rating;
-        //this.imageLocation = imageLocation;
+        this.imageLocation = imageLocation;
     }
 
     //Add getters and setters to allow access to the data
@@ -55,28 +55,29 @@ public class Sight {
         this.rating = rating;
     }
     //Image location
-    /*
-    public String getImageLocation() {
+
+    public int getImageLocation() {
         return imageLocation;
     }
 
-    public void setImageLocation(String imageLocation) {
+    public void setImageLocation(int imageLocation) {
         this.imageLocation = imageLocation;
     }
-    */
+
     //Store data into an Array list which will be accessible by other classes
     public static ArrayList <Sight> getSights(){
         ArrayList<Sight> sights = new ArrayList<>();
-            sights.add(new Sight("Bondi Beach", "Outdoor","Bondi, NSW", 4.6/*, "bondibeach"*/));
-            sights.add(new Sight("Sydney Opera House","Famous Building","City of Sydney, NSW",4.7/*, "sydneyoperahouse"*/));
-            sights.add(new Sight("Sydney Harbour Bridge","Famous building","City of Sydney, NSW",4.7/*,"sydneyharbourbridge"*/));
-            sights.add(new Sight("Port Jackson Bay","View","Port Jackson Bay, NSW",4.4/*,"portjacksonbay"*/));
-            sights.add(new Sight("Darling Harbour","View","City of Sydney, NSW",4.6/*,"darlingharbour"*/));
-            sights.add(new Sight("Royal Botanic Garden Sydney","Outdoor","City of Sydney, NSW",4.7/*,"royalbotanicgarden"*/));
-            sights.add(new Sight("Taronga Zoo Sydney","Attraction","Mosman, NSW",4.5/*,"tarongazoo"*/));
-            sights.add(new Sight("Sydney Tower Eye","Attraction","City of Sydney, NSW",4.3/*,"sydneytowereye"*/));
-            sights.add(new Sight("SEA LIFE Sydney Aquarium","Attraction","City of Sydney, NSW",4.3/*,"sealifesydneyaquarium"*/));
-            sights.add(new Sight("Manly Beach","Outdoor","Manly, NSW",4.6/*,"manlybeach"*/));
+            sights.add(new Sight("Bondi Beach", "Outdoor","Bondi, NSW", 4.6, R.drawable.bondibeach));
+            sights.add(new Sight("Sydney Opera House","Famous Building","City of Sydney, NSW",4.7, R.drawable.sydneyoperahouse));
+            sights.add(new Sight("Sydney Harbour Bridge","Famous building","City of Sydney, NSW",4.7,R.drawable.sydneyharbourbridge));
+            sights.add(new Sight("Port Jackson Bay","View","Port Jackson Bay, NSW",4.4,R.drawable.portjacksonbay));
+            sights.add(new Sight("Darling Harbour","View","City of Sydney, NSW",4.6,R.drawable.darlingharbour));
+            sights.add(new Sight("Royal Botanic Garden Sydney","Outdoor","City of Sydney, NSW",4.7,R.drawable.royalbotanicgarden));
+            sights.add(new Sight("Taronga Zoo Sydney","Attraction","Mosman, NSW",4.5,R.drawable.tarongazoo));
+            sights.add(new Sight("Sydney Tower Eye","Attraction","City of Sydney, NSW",4.3,R.drawable.sydneytowereye));
+            sights.add(new Sight("SEA LIFE Sydney Aquarium","Attraction","City of Sydney, NSW",4.3,R.drawable.sealifesydneyacquarium));
+            sights.add(new Sight("Manly Beach","Outdoor","Manly, NSW",4.6,R.drawable.manlybeach));
+
         return sights;
     }
 }
