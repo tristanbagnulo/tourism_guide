@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
@@ -24,33 +26,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Create an ImageView object
-        //ImageView image = findViewById(R.id.ivImage);
-        //Re-create the ArrayList in MainActivity
-        ArrayList<Sight> sights = Sight.getSights();
-
-        //Assign a given variable from within a given Sight object to the variable "st"
-        //String st = sights.get(1).getImageLocation();
-
-        //Testing with a log (will appear in Logcat)
-        //Log.d("TestingTAG", st);
-
         //Initialise RecyclerView
         mRecyclerView = findViewById(R.id.rvList);
         //Boilerplate - (increases functionality)
         mRecyclerView.setHasFixedSize(true);
 
+        //Implement a click listener to launch the Detail Activity
+        MyAdapter.OnClickListener listener = new MyAdapter.OnClickListener(){
+            @Override
+            public void onClick (View v, String name){
+                launchDetailActivity(name);
+            }
+        };
         //Initialise the adapter
-        myAdapter= new MyAdapter(this, Sight.getSights(), this);
+        myAdapter= new MyAdapter(this, Sight.getSights(), listener);
 
         //Link Adapter and Recycler View
         mRecyclerView.setAdapter(myAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //int imageResource = getResources().getIdentifier("@drawable/"+st,null,getPackageName());
-        //image.setImageResource(imageResource);
 
 
+    }
+
+    private void launchDetailActivity(String message){
+        Intent intent = new Intent (this, DetailActivity.class);
+        intent.putExtra(DetailActivity.INTENT_MESSAGE, message);
+        startActivity(intent);
     }
 
     @Override
@@ -90,9 +92,4 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public interface OnNoteListener{
-        void onNoteClick(int position);
-    }
-
 }

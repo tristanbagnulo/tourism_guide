@@ -11,6 +11,15 @@ public class Sight {
     private double rating;
     private int imageLocation;
 
+    public String getWebSearch() {
+        return webSearch;
+    }
+
+    public void setWebSearch(String webSearch) {
+        this.webSearch = webSearch;
+    }
+
+    private String webSearch;
 
     //Constructor
     public Sight(String name, String type, String location, double rating, int imageLocation){

@@ -30,17 +30,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public static final int SORT_METHOD_NAME = 1;
     public static final int SORT_METHOD_RATING = 2;
 
-    //Instantiate onNoteListener
-    private OnNoteListener myOnNoteListener;
+    //Instantiate onClickListener
+    private OnClickListener myOnClickListener;
 
 
     //Constructor - Allows us to Initialises our class in main activity and pass values
-    public MyAdapter(Context context, ArrayList<Sight> sights, OnNoteListener onNoteListener){
+    public MyAdapter(Context context, ArrayList<Sight> sights, OnClickListener onClickListener){
         this.context = context;
         this.sights = sights;
         //Create copy of the full ArrayList
         sightsFull = new ArrayList<>(sights);
-        this.myOnNoteListener = onNoteListener;
+        this.myOnClickListener = onClickListener;
 
 
     }
@@ -50,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent, false);
-        return new MyViewHolder(view, myOnNoteListener);
+        return new MyViewHolder(view, myOnClickListener);
     }
 
     //The onBindViewHolder class sets the text and image of each MyViewHolder object
@@ -76,9 +76,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         public static int SORT_METHOD_NAME;
         TextView name, type, location, rating;
         ImageView image;
-        OnNoteListener onNoteListener;
+        OnClickListener onClickListener;
 
-        public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+        public MyViewHolder(@NonNull View itemView, OnClickListener onClickListener) {
             super(itemView);
             //Find id using itemView
             name = itemView.findViewById(R.id.tvName);
@@ -88,12 +88,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             image = itemView.findViewById(R.id.ivImage);
             itemView.setOnClickListener(this);
 
-            this.onNoteListener = onNoteListener;
+            this.onClickListener = onClickListener;
         }
 
         @Override
         public void onClick(View v) {
-            onNoteListener.onNoteClick(getAdapterPosition());
+            onClickListener.onClick(v, (String) v.getTag());
         }
     }
 
@@ -152,7 +152,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         notifyDataSetChanged();
     }
 
-    public interface OnNoteListener{
-        void onNoteClick(int position);
+    //To-do - Figure out how OnClickListener works - Open Assignment 1 to see yours there
+    public interface OnClickListener{
+        void onClick(View v, String name);
     }
 }
