@@ -10,61 +10,80 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Name"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/ivImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivImage" />
-
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="378dp"
-        android:layout_height="239dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:onClick="openWebsite"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Name"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:layout_marginTop="16dp"
-        android:text="Location"
-        app:layout_constraintStart_toStartOf="@+id/tvRating"
-        app:layout_constraintTop_toBottomOf="@+id/tvRating" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName">
 
-    <Button
-        android:id="@+id/btMoreInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Find out more"
-        app:layout_constraintStart_toStartOf="@+id/tvDescription"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Description"
-        app:layout_constraintStart_toStartOf="@+id/tvLocation"
-        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="378dp"
+                android:layout_height="239dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:foreground="@drawable/border"
+                tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Rating"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Rating" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Location" />
+
+            <TextView
+                android:id="@+id/tvDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Details" />
+
+            <Button
+                android:id="@+id/btMoreInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Find out more" />
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Implement a click listener to launch the Detail Activity
         MyAdapter.OnClickListener listener = new MyAdapter.OnClickListener(){
-
             @Override
             public void onClick (View v, String name){
                 Log.d("String in onClick MainA","Extra data "+name);
@@ -48,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(myAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
     }
 
+    //This method opens DetailActivity and passes a String which holds the name of the sight
+    //that was clicked in the RecyclerView.
     private void launchDetailActivity(String message){
         Log.d("String in lDA","Extra data "+message);
         Intent intent = new Intent (this, DetailActivity.class);
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //This adds a menu to the top of the Recyclerview. It supports the search function
+    //wherein a user types a word or phrase that they want to see.
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //This supports the sorting function of the app. Basically, it sorts by the sorting factor
+    //that was selected in from the main activity display.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();

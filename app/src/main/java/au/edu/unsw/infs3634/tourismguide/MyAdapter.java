@@ -1,6 +1,7 @@
 package au.edu.unsw.infs3634.tourismguide;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public MyAdapter(Context context, ArrayList<Sight> sights, OnClickListener onClickListener){
         this.context = context;
         this.sights = sights;
-        //Create copy of the full ArrayList
+
+        //Create copy of the full ArrayList to act as our list that isn't filtered or sorted at
+        //all
         sightsFull = new ArrayList<>(sights);
         this.myOnClickListener = onClickListener;
 
 
     }
 
+    //This specifies the my_row.xml file as the thing that will be inflated and what represents a
+    //single "view" of which the RecyclerView comprises of many.
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,17 +65,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
         //Holder is used to find name, type etc...
         holder.name.setText(sight.getName());
-        holder.type.setText(sight.getType());
-        holder.location.setText(sight.getLocation());
-        holder.rating.setText(String.valueOf(sight.getRating()));
+        holder.type.setText("Type: "+sight.getType());
+        holder.location.setText("Location: "+sight.getLocation());
+        holder.rating.setText("Rating: "+String.valueOf(sight.getRating()));
         holder.image.setImageResource(sight.getImageLocation());
+        holder.itemView.setTag(sight.getName());
     }
 
+    //Keeps track of how many objects (and therefore, potential views) appear in the RecyclerView.
     @Override
     public int getItemCount() {
         return sights.size();
     }
 
+    //This does a number of things
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public static int SORT_METHOD_NAME;
@@ -78,33 +86,42 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         ImageView image;
         OnClickListener onClickListener;
 
+        //Constructor
         public MyViewHolder(@NonNull View itemView, OnClickListener onClickListener) {
             super(itemView);
-            //Find id using itemView
+            //Assigns a variable to a reference for the components within the layout in my_row
+            //this allows them to be referenced above in onBindViewHolder
             name = itemView.findViewById(R.id.tvName);
             type = itemView.findViewById(R.id.tvType);
             location = itemView.findViewById(R.id.tvLocation);
             rating = itemView.findViewById(R.id.tvRating);
             image = itemView.findViewById(R.id.ivImage);
+            //Find id using itemView
             itemView.setOnClickListener(this);
-
+            //Instantiates the
             this.onClickListener = onClickListener;
         }
 
         @Override
+        //When a given view is selected("clicked") we send that view and an identifying string or
+        //"tag" which is used to select the right data to display in the DetailActivity.
         public void onClick(View v) {
-            onClickListener.onClick(v, (String) v.getTag());
+            onClickListener.onClick(v, v.getTag().toString());
+            Log.d("MVH onClick tag","Text data "+ v.getTag());
         }
     }
 
+    //Create teh filter object
     @Override
     public Filter getFilter() {
         return exampleFilter;
     }
 
+    //Declare and instantiate the Filter object.
     private Filter exampleFilter = new Filter(){
 
         @Override
+        //Here is where filtering occurs. This is what enables sorting via rating
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Sight> filteredList = new ArrayList<>();
 
@@ -114,19 +131,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             } else {
                 //Prepare the input for filtering by removing cases and extra spaces
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
                 //Iterate through all items in the list and see whether it fits
                 for (Sight item: sightsFull){
-                    if (item.getName().toLowerCase().contains(filterPattern)){
+                    if (item.getDetails().toLowerCase().contains(filterPattern)){
                         filteredList.add(item);
                     }
                 }
             }
+            //Now assign the filtered objects to a new ArrayList which so that it can be refrenced
+            //later on.
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
         }
 
+        //Here, the filtered results are used i.e. displated. Now, the only thing that the user
+        //will see in the MainActivity's display is the views of the objects (sights)
+        //that that specified
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             sights.clear();
@@ -135,6 +156,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         }
     };
 
+    //Similar to the filtering stuff but it just reorganises what appears at the top of the
+    //RecyclerView based on a sorting criterion. In this case, it's name.
     public void sort(final int sortMethod){
         //if(sights.size()>0){
             Collections.sort(sights, new Comparator<Sight>(){
@@ -152,7 +175,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         notifyDataSetChanged();
     }
 
-    //To-do - Figure out how OnClickListener works - Open Assignment 1 to see yours there
+    //This is an interface which specifies that everywhere that OnClickListener is called,
+    //the method onClick must be used and it must contain the parameters of a View and a String
     public interface OnClickListener {
         void onClick(View v, String name);
     }
