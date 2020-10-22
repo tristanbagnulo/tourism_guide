@@ -10,15 +10,6 @@ public class Sight {
     private String location;
     private double rating;
     private int imageLocation;
-
-    public String getWebSearch() {
-        return webSearch;
-    }
-
-    public void setWebSearch(String webSearch) {
-        this.webSearch = webSearch;
-    }
-
     private String webSearch;
 
     //Constructor
@@ -71,6 +62,15 @@ public class Sight {
 
     public void setImageLocation(int imageLocation) {
         this.imageLocation = imageLocation;
+    }
+
+    //Web search URL
+    public String getWebSearch() {
+        return webSearch;
+    }
+
+    public void setWebSearch(String webSearch) {
+        this.webSearch = webSearch;
     }
 
     //Store data into an Array list which will be accessible by other classes

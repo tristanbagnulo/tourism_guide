@@ -153,7 +153,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     }
 
     //To-do - Figure out how OnClickListener works - Open Assignment 1 to see yours there
-    public interface OnClickListener{
+    public interface OnClickListener {
         void onClick(View v, String name);
     }
 }
