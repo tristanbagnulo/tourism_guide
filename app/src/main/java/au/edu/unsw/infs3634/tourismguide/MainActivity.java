@@ -1,5 +1,6 @@
 package au.edu.unsw.infs3634.tourismguide;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Implement a click listener to launch the Detail Activity
         MyAdapter.OnClickListener listener = new MyAdapter.OnClickListener(){
+
             @Override
             public void onClick (View v, String name){
+                Log.d("String in onClick MainA","Extra data "+name);
                 launchDetailActivity(name);
             }
         };
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchDetailActivity(String message){
+        Log.d("String in lDA","Extra data "+message);
         Intent intent = new Intent (this, DetailActivity.class);
         intent.putExtra(DetailActivity.INTENT_MESSAGE, message);
         startActivity(intent);
